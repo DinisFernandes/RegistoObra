@@ -25,7 +25,7 @@ SECRET_KEY = '4rhi25@l0*9r&9w82$*i0r%qi-c0@1%_jv3!g&ngczl@161joz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'registoobra.pt']
 
 
 # Application definition
