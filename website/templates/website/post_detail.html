@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block subtitle %}Detalhe{% endblock %}
+{% block conteudo %}
+<div class="pd-5">
+    <h2>{{ object.title }}</h2>
+    <small>{{ object.data_post }}</small>
+    <hr>
+    <p>{{ object.content }}</p>
+    <hr>
+</div>
+<div class="row">
+        <div class="col-lg-6">
+                {% if post.imagem_post %}
+                <a href="{{ post.imagem_post.url }}"><img src="{{ post.imagem_post.url }}" class="img-responsive " width="100%" alt=""></a>
+                {% else %}
+                    <a href="#"><img src="{% static 'images/logorb.png' %}" class="img-responsive " width="100%" alt=""></a>
+                {% endif %}
+        </div>
+        <div class="col-lg-6">
+            <div id="map" style="width:100%;height:400px"></div>
+            <script>
+                    var lat = "{{ object.latitude }}"
+                    var latt = lat.replace(",",".");
+                    var lng = "{{ object.longitude }}"
+                    var lngg = lng.replace(",",".");
+                    function myMap() {
+                    var myCenter = new google.maps.LatLng(latt, lngg);
+                    var mapCanvas = document.getElementById("map");
+                    var mapOptions = {center: myCenter, zoom: 16};
+                    var map = new google.maps.Map(mapCanvas, mapOptions);
+                    var marker = new google.maps.Marker({position:myCenter});
+                     marker.setMap(map);
+                     }
+              </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMSll9NQQ2DO1OK6hsIVlfAGrB2thf_Hw&callback=myMap"></script>
+        </div>
+</div>
+
+{% endblock %}

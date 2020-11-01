@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block subtitle %}Espregueira Mendes{% endblock %}
+{% block conteudo %}
+<iframe src="https://www.google.com/maps/d/embed?mid=1VRjzlm8lQq_ZeaGs2QxcaMablWXfcxhG&hl=pt-PT" height="480" width="100%"></iframe>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="chart_div"></div>
+    </div>
+</div>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function daysToMilliseconds(days) {
+      return days * 24 * 60 * 60 * 1000;
+    }
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Task ID');
+      data.addColumn('string', 'Task Name');
+      data.addColumn('date', 'Start Date');
+      data.addColumn('date', 'End Date');
+      data.addColumn('number', 'Duration');
+      data.addColumn('number', 'Percent Complete');
+      data.addColumn('string', 'Dependencies');
+
+      data.addRows([
+        ['Tubagens_lamosa', 'Colocação de Tubagens (R. Lamosa)',
+         new Date(2020, 9, 1), new Date(2020, 9, 16), null,  0,  null],
+        ['Ensaios_lamosa', 'Ensaios (R. Lamosa)',
+         new Date(2020, 10, 19), new Date(2020, 9, 21), null, 0, 'Tubagens_lamosa'],
+        ['Pavimentos_lamosa', 'Pavimentação (R. Lamosa)',
+         new Date(2020, 10, 22), new Date(2020, 10, 23), null, 0, 'Ensaios_lamosa'],
+        ['Tubagens_caminha', 'Colocação de Tubagens (R. Caminha)',
+         new Date(2020, 10, 13), new Date(2020,10, 19), null,  0,  null],
+        ['Ensaios_caminha', 'Ensaios (R. Caminha)',
+         new Date(2020, 10, 20), new Date(2020, 10, 24), null, 0, 'Tubagens_caminha'],
+        ['Pavimentos_caminha', 'Pavimentação (R. Caminha)',
+         new Date(2020,10, 25), new Date(2020, 10, 27), null,  0,  'Ensaios_caminha'],
+        ['Tubagens_lima', 'Colocação de Tubagens (R. Ponte de Lima)',
+         new Date(2020, 10, 20), new Date(2020, 10, 27), null,  0, 'Tubagens_caminha'],
+        ['Ensaios_lima', 'Ensaios (R. Ponte de Lima)',
+         new Date(2020, 10, 30), new Date(2020, 11, 2), null, 0, 'Tubagens_lima'],
+        ['Pavimentos_lima', 'Pavimentação (R. Ponte de Lima)',
+         new Date(2020, 11, 3), new Date(2020, 11, 4), null, 0, 'Ensaios_lima'],
+        ['Tubagens_martim', 'Colocação de Tubagens (R. Martim Delgado)',
+         new Date(2020, 10, 30), new Date(2020, 11, 1), null,  6, 'Tubagens_lima'],
+        ['Ensaios_martim', 'Ensaios (R. Martim Delgado)',
+         new Date(2020, 11, 2), new Date(2020, 11, 4), null, 0, 'Tubagens_martim'],
+        ['Pavimentos_martim', 'Pavimentação (R. Martim Delgado)',
+         new Date(2020, 11, 5), new Date(2020, 11, 7), null, 0, 'Ensaios_martim']
+      ]);
+
+      var options = {
+        height: 600
+      };
+
+      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
+  </script>
+
+
+
+
+
+
+{% endblock %}

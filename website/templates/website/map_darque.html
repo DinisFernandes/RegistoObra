@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block subtitle %}Darque{% endblock %}
+{% block conteudo %}
+<iframe src="https://www.google.com/maps/d/embed?mid=12ENKhGgSdXzBzECNgblwEl0LgAmUeEYH&hl=pt-PT" height="480" width="100%"></iframe>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="chart_div"></div>
+    </div>
+</div>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function daysToMilliseconds(days) {
+      return days * 24 * 60 * 60 * 1000;
+    }
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Task ID');
+      data.addColumn('string', 'Task Name');
+      data.addColumn('date', 'Start Date');
+      data.addColumn('date', 'End Date');
+      data.addColumn('number', 'Duration');
+      data.addColumn('number', 'Percent Complete');
+      data.addColumn('string', 'Dependencies');
+
+      data.addRows([
+        ['Tubagens_lilazes', 'Colocação de Tubagens (R. Lilazes)',
+         new Date(2020, 10, 04), new Date(2020, 10, 10), null,  100,  null],
+        ['Ensaios_lilazes', 'Ensaios (R. Lilazes)',
+         new Date(2020, 10, 11), new Date(2020, 10, 13), null, 0, 'Tubagens_lilazes'],
+        ['Pavimentos_lilazes', 'Pavimentação (R. Lilazes)',
+         new Date(2020, 10, 14), new Date(2020, 10, 18), null, 0, 'Ensaios_lilazes'],
+        ['Tubagens_violetas', 'Colocação de Tubagens (R. Violetas)',
+         new Date(2020, 10, 11), new Date(2020, 10, 13), null,  100,  'Tubagens_lilazes'],
+        ['Ensaios_violetas', 'Ensaios (R. Violetas)',
+         new Date(2020, 10, 14), new Date(2020, 10, 18), null, 0, 'Tubagens_violetas'],
+        ['Pavimentos_violetas', 'Pavimentação (R. Violetas)',
+         new Date(2020, 10, 19), new Date(2020, 10, 20), null,  0,  'Ensaios_violetas'],
+        ['Tubagens_3', 'Colocação de Tubagens (R. 3 de Julho)',
+         new Date(2020, 10, 14), new Date(2020, 10, 25), null, 100, 'Tubagens_violetas'],
+        ['Ensaios_3', 'Ensaios (R. 3 de Julho)',
+         new Date(2020, 10, 26), new Date(2020, 10, 30), null, 0, 'Tubagens_3'],
+        ['Pavimentos_3', 'Pavimentação (R. 3 de Julho)',
+         new Date(2020, 11, 1), new Date(2020,11, 7), null, 0, 'Ensaios_3']
+      ]);
+
+      var options = {
+        height: 400
+      };
+
+      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
+  </script>
+
+
+
+{% endblock %}

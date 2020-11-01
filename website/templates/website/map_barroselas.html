@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block subtitle %}Barroselas{% endblock %}
+{% block conteudo %}
+<iframe src="https://www.google.com/maps/d/embed?mid=1A7BBS8MpAlh-2KmwZNgqLUqnH73hiVjS&hl=pt-PT" height="480" width="100%"></iframe>
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="chart_div"></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['gantt']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function daysToMilliseconds(days) {
+          return days * 24 * 60 * 60 * 1000;
+        }
+
+        function drawChart() {
+
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Task ID');
+          data.addColumn('string', 'Task Name');
+          data.addColumn('date', 'Start Date');
+          data.addColumn('date', 'End Date');
+          data.addColumn('number', 'Duration');
+          data.addColumn('number', 'Percent Complete');
+          data.addColumn('string', 'Dependencies');
+
+          data.addRows([
+            ['Tubagens_estacao', 'Colocação de Tubagens (R. Estação)',
+             new Date(2020, 7, 19), new Date(2020, 7, 27), null,  100,  null],
+            ['Ensaios_estacao', 'Ensaios (R. Estação)',
+             new Date(2020, 7, 28), new Date(2020, 8, 1), null, 0, 'Tubagens_estacao'],
+            ['Pavimentos_estacao', 'Pavimentação (R. Estação)',
+             new Date(2020, 8, 2), new Date(2020, 8, 7), null, 0, 'Ensaios_estacao'],
+            ['Tubagens_mujaes', 'Colocação de Tubagens (Mujães)',
+             new Date(2020, 7, 28), new Date(2020, 9, 5), null,  100,  null],
+            ['Ensaios_mujaes', 'Ensaios (Mujães)',
+             new Date(2020, 9, 6), new Date(2020, 9, 8), null, 0, 'Tubagens_mujaes'],
+            ['Pavimentos_mujaes', 'Pavimentação (Mujães)',
+             new Date(2020, 9, 9), new Date(2020, 9, 12), null,  0,  'Ensaios_mujaes'],
+            ['Tubagens_vilapunhe', 'Colocação de Tubagens (V.Punhe)',
+             new Date(2020, 9, 6), new Date(2021, 0, 4), null,  0, 'Tubagens_mujaes'],
+            ['Ensaios_vilapunhe', 'Ensaios (V.Punhe)',
+             new Date(2021, 0, 5), new Date(2021, 0, 11), null, 0, 'Tubagens_vilapunhe'],
+            ['Pavimentos_vilapunhe', 'Pavimentação (V.Punhe)',
+             new Date(2021, 0, 12), new Date(2021, 0, 28), null, 0, 'Ensaios_vilapunhe'],
+            ['Tubagens_vilafria', 'Colocação de Tubagens (VF e Mazarefes)',
+             new Date(2021, 0, 5), new Date(2021, 1, 8), null,  6, 'Tubagens_vilapunhe'],
+            ['Ensaios_vilafria', 'Ensaios (VF e Mazarefes)',
+             new Date(2021, 1, 9), new Date(2021, 2, 11), null, 0, 'Tubagens_vilafria'],
+            ['Pavimentos_vilafria', 'Pavimentação (VF e Mazarefes)',
+             new Date(2021, 2, 12), new Date(2021, 2, 24), null, 0, 'Ensaios_vilafria']
+          ]);
+
+          var options = {
+            height: 600
+          };
+
+          var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+          chart.draw(data, options);
+        }
+    </script>
+
+{% endblock %}

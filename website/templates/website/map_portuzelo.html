@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block subtitle %}Portuzelo{% endblock %}
+{% block conteudo %}
+<iframe src="https://www.google.com/maps/d/embed?mid=1BCk4Yr4ExufxT8MFZah6nIZQSel9EZN6&hl=pt-PT"   height="480" width="100%"></iframe>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="chart_div"></div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['gantt']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function daysToMilliseconds(days) {
+          return days * 24 * 60 * 60 * 1000;
+        }
+
+        function drawChart() {
+
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Task ID');
+          data.addColumn('string', 'Task Name');
+          data.addColumn('date', 'Start Date');
+          data.addColumn('date', 'End Date');
+          data.addColumn('number', 'Duration');
+          data.addColumn('number', 'Percent Complete');
+          data.addColumn('string', 'Dependencies');
+
+          data.addRows([
+            ['Tubagens_perre', 'Colocação de Tubagens',
+             new Date(2020, 10, 26), new Date(2021, 0, 5), null,  0,  null],
+            ['Ensaios_perre', 'Ensaios',
+             new Date(2021, 0, 6), new Date(2021, 0, 8), null, 0, 'Tubagens_perre'],
+            ['Pavimentos_perre', 'Pavimentação',
+             new Date(2021, 0, 9), new Date(2021, 0, 13), null, 0, 'Ensaios_perre']
+          ]);
+
+          var options = {
+            height: 200
+          };
+
+          var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+          chart.draw(data, options);
+        }
+    </script>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block subtitle %}Vila Nova de Anha{% endblock %}
+{% block conteudo %}
+<iframe src="https://www.google.com/maps/d/embed?mid=1ucMsTE09Ues0MFhAjr21H98B7o-ySr3D&hl=pt-PT" height="480" width="100%"></iframe>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="chart_div"></div>
+    </div>
+</div>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function daysToMilliseconds(days) {
+      return days * 24 * 60 * 60 * 1000;
+    }
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Task ID');
+      data.addColumn('string', 'Task Name');
+      data.addColumn('date', 'Start Date');
+      data.addColumn('date', 'End Date');
+      data.addColumn('number', 'Duration');
+      data.addColumn('number', 'Percent Complete');
+      data.addColumn('string', 'Dependencies');
+
+      data.addRows([
+        ['Tubagens_porteiro', 'Colocação de Tubagens (Av. Porteiro)',
+         new Date(2020, 7, 19), new Date(2020, 9, 7), null,  59,  null],
+        ['Ensaios_porteiro', 'Ensaios (Av. Porteiro)',
+         new Date(2020, 9, 8), new Date(2020, 9, 12), null, 0, 'Tubagens_porteiro'],
+        ['Pavimentos_porteiro', 'Pavimentação (Av. Porteiro)',
+         new Date(2020, 9, 13), new Date(2020, 9, 20), null, 0, 'Ensaios_porteiro'],
+        ['Tubagens_st', 'Colocação de Tubagens (Rua de São Tiago)',
+         new Date(2020, 9, 8), new Date(2020, 10, 3), null,  0,  'Tubagens_porteiro'],
+        ['Ensaios_st', 'Ensaios (Rua de São Tiago)',
+         new Date(2020, 10, 4), new Date(2020, 10, 6), null, 0, 'Tubagens_st'],
+        ['Pavimentos_st', 'Pavimentação (Rua de São Tiago)',
+         new Date(2020, 10, 7), new Date(2020, 10, 23), null,  0,  'Ensaios_st']
+      ]);
+
+      var options = {
+        height: 300
+      };
+
+      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
+  </script>
+
+
+
+
+{% endblock %}

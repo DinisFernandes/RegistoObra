@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block subtitle %}Portela{% endblock %}
+{% block conteudo %}
+<iframe src="https://www.google.com/maps/d/embed?mid=11P_mg9i8WhH0WeJtKAXjddrbdFgj9nOa&hl=pt-PT" height="480" width="100%"></iframe>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="chart_div"></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['gantt']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function daysToMilliseconds(days) {
+          return days * 24 * 60 * 60 * 1000;
+        }
+
+        function drawChart() {
+
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Task ID');
+          data.addColumn('string', 'Task Name');
+          data.addColumn('date', 'Start Date');
+          data.addColumn('date', 'End Date');
+          data.addColumn('number', 'Duration');
+          data.addColumn('number', 'Percent Complete');
+          data.addColumn('string', 'Dependencies');
+
+          data.addRows([
+            ['Tubagens_monte', 'Colocação de Tubagens (R. do Monte)',
+             new Date(2020, 8, 7), new Date(2020, 8, 30), null, 0,  null],
+            ['Ensaios_monte', 'Ensaios (R. do Monte)',
+             new Date(2020, 9, 1), new Date(2020, 9, 5), null, 0, 'Tubagens_monte'],
+            ['Pavimentos_monte', 'Pavimentação (R. do Monte)',
+             new Date(2020, 9, 6), new Date(2020, 9, 7), null, 0, 'Ensaios_monte'],
+            ['Tubagens_tv', 'Colocação de Tubagens (Tv Couto Paredes)',
+             new Date(2020, 9, 19), new Date(2020, 9, 21), null, 0,  null],
+            ['Ensaios_tv', 'Ensaios (Tv Couto Paredes)',
+             new Date(2020, 9, 22), new Date(2020, 9, 23), null, 0, 'Tubagens_tv'],
+            ['Pavimentos_tv', 'Pavimentação (Tv Couto Paredes)',
+             new Date(2020, 9, 24), new Date(2020, 10, 4), null,  0,  'Ensaios_tv'],
+            ['Tubagens_padre', 'Colocação de Tubagens (Padre A. Guerreiro)',
+             new Date(2020, 9, 22), new Date(2020, 9, 26), null,  0, 'Tubagens_tv'],
+            ['Ensaios_padre', 'Ensaios (Padre A. Guerreiro)',
+             new Date(2020, 9, 27), new Date(2020, 9, 29), null, 0, 'Tubagens_padre'],
+            ['Pavimentos_padre', 'Pavimentação (Padre A. Guerreiro)',
+             new Date(2020, 9, 30), new Date(2020, 9, 31), null, 0, 'Ensaios_padre'],
+            ['Tubagens_vinha', 'Colocação de Tubagens (R. Campo Vinha)',
+             new Date(2020, 9, 27), new Date(2020, 10, 5), null,  0, 'Tubagens_padre'],
+            ['Ensaios_vinha', 'Ensaios (R. Campo Vinha)',
+             new Date(2020, 10, 6), new Date(2020, 10, 10), null, 0, 'Tubagens_vinha'],
+            ['Pavimentos_vinha', 'Pavimentação (R. Campo Vinha)',
+             new Date(2020, 10, 11), new Date(2020, 10, 12), null, 0, 'Ensaios_vinha'],
+            ['Tubagens_veiga', 'Colocação de Tubagens (R. Veiga)',
+             new Date(2020, 10, 6), new Date(2020, 10, 12), null,  0, 'Tubagens_vinha'],
+            ['Ensaios_veiga', 'Ensaios (R. Veiga)',
+             new Date(2020, 10, 13), new Date(2020, 10, 17), null, 0, 'Tubagens_veiga'],
+            ['Pavimentos_veiga', 'Pavimentação (R. Veiga)',
+             new Date(2020, 10, 18), new Date(2020, 10, 19), null, 0, 'Ensaios_veiga'],
+            ['Tubagens_portela', 'Colocação de Tubagens (R. Portela)',
+             new Date(2020, 10, 6), new Date(2020, 10, 7), null,  0, 'Tubagens_vinha'],
+            ['Pavimentos_portela', 'Pavimentação (R. Portlea)',
+             new Date(2020, 10, 9), new Date(2020, 10, 10), null, 0, 'Tubagens_portela']
+          ]);
+
+          var options = {
+            height: 800
+          };
+
+          var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+          chart.draw(data, options);
+        }
+    </script>
+
+
+
+
+
+{% endblock %}

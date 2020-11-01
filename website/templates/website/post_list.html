@@ -1,0 +1,42 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block subtitle %}Galeria de Fotos{% endblock %}
+    {% block conteudo %}
+
+    <div class="row" margin-left="15px">
+        <div class="col-md-6">
+            <div class="panel-head">
+                <p><strong>{{ object_list.count }}</strong> de <strong>{{items}}</strong> itens </p>
+            </div>
+        </div>
+    </div>
+
+    {% for post in object_list %}
+    <div class="row">
+        <div class="col-lg-4 ">
+            <div class="panel-body"  >
+                {% if post.imagem_post %}
+                    <a href="{{ post.imagem_post.url }}"><img src="{{ post.imagem_post.url }}" class="img-responsive " width="100%" alt=""></a>
+                {% else %}
+                    <a href="#"><img src="{% static 'images/logorb.png' %}" class="img-responsive " width="100%" alt=""></a>
+                {% endif %}
+             </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="panel-heading">
+                <h2>{{ post.title }}</h2>
+                <small>{{ post.data_post }}</small><br>
+                <a href={% url 'post_detail' post.id %}><buton  type="button" class="btn btn-sm btn-info">Ver Mais</buton></a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <hr>
+    </div>
+    {% endfor %}
+    {% endblock %}
+    {% block paginacao %}
+    {% include 'parciais/_pagination.html' %}
+    {% endblock %}
