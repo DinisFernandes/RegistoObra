@@ -12,6 +12,15 @@ class PostList(ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
+        termo = self.request.GET.get('termo')
+        if not termo:
+            return qs
+
+        qs = qs.filter(
+            Q(title__icontains=termo) |
+            Q(content__icontains=termo)
+        )
+
         qs = qs.order_by('-data_post')
         return qs
 
@@ -30,6 +39,7 @@ class PostDetail(DetailView):
 class PostBusca(PostList):
     num= 0
     template_name = 'website/post_busca.html'
+
     def get_queryset(self, **kwargs):
         qs = super().get_queryset()
         termo = self.request.GET.get('termo')

@@ -21,7 +21,7 @@ from .views import MapaPortela
 urlpatterns = [
     path('', PostList.as_view(), name="post_list"),
     path('post/<int:pk>/', PostDetail.as_view(), name="post_detail"),
-    path('busca/', PostBusca.as_view(), name='post_busca'),
+    path('busca/', PostBusca.as_view(), name="post_busca"),
     path('barroselas/', MapaBarroselas.as_view(), name="barroselas"),
     path('vilanovaanha/', MapaChafe.as_view(), name="vilanovaanha"),
     path('darque/', MapaDarque.as_view(), name="darque"),
