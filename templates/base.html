@@ -97,12 +97,14 @@
 <!--            <button class="btn btn-secondary" onclick="{% url 'post_busca' %}" type="submit"><i class="fa fa-search"></i></button>-->
 <!--          </span>-->
 <!--        </div>&lt;!&ndash; input-group &ndash;&gt;-->
+
         <form class="input-group" action="{% url 'post_busca' %}">
           <input type="search" class="form-control" name="termo" placeholder="Digite a sua pesquisa" >
           <span class="form-group input-group-btn">
             <button class="btn btn-default" onclick="{% url 'post_busca' %}" type="submit"><i class="fa fa-search"></i></button>
           </span>
         </form>
+
 
 
 
