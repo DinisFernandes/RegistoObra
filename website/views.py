@@ -49,7 +49,6 @@ class PostBusca(PostList):
         )
         return qs
 
-
 class MapaBarroselas(TemplateView):
     template_name = 'website/map_barroselas.html'
 
