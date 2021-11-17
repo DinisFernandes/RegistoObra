@@ -13,11 +13,11 @@ class PostList(ListView):
     model = Post
     paginate_by = 7
 
-    # def get_queryset(self):
-    #     qs = super().get_queryset()
-    #
-    #     qs = qs.order_by('-data_post')
-    #     return qs
+    def get_queryset(self):
+        qs = super().get_queryset()
+
+        qs = qs.order_by('-data_post')
+        return qs
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -34,17 +34,34 @@ class PostBusca(PostList):
     num= 0
     template_name = 'website/post_busca.html'
 
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset()
-        termo = self.request.GET.get('termo')
-        if not termo:
-            return qs
+    # def get_queryset(self, **kwargs):
+    #     qs = super().get_queryset()
+    #     termo = self.request.GET.get('termo')
+    #     if not termo:
+    #         return qs
+    #
+    #     qs = qs.filter(
+    #         Q(title__icontains=termo) |
+    #         Q(content__icontains=termo)
+    #     )
+    #     return qs
 
-        qs = qs.filter(
-            Q(title__icontains=termo) |
-            Q(content__icontains=termo)
-        )
-        return qs
+    def get_context_data(self, **kwargs):
+        termo = self.request.GET.get('termo')
+        context = super().get_context_data(**kwargs)
+        if not termo:
+            context.update({
+                'busca': Post.objects.all()
+            })
+            return context
+
+        context.update({
+            'busca': Post.objects.filter(
+                Q(title__icontains=termo) |
+                Q(content__icontains=termo))
+        })
+        return context
+
 
 class MapaBarroselas(TemplateView):
     template_name = 'website/map_barroselas.html'

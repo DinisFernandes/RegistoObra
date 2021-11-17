@@ -7,7 +7,7 @@
     <div class="row" margin-left="15px">
         <div class="col-md-6">
             <div class="panel-head">
-                <p><strong>{{ object_list.count }}</strong> de <strong>{{ paginator.count }}</strong> itens </p>
+                <p><strong>{{ busca.count }}</strong> de <strong>{{ paginator.count }}</strong> itens </p>
             </div>
         </div>
     </div>
@@ -15,7 +15,7 @@
 
 
 
-{% for post in object_list %}
+{% for post in busca %}
 
     <div class="row">
         <div class="col-lg-4 ">
