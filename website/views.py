@@ -5,24 +5,19 @@ from .models import Post
 from django.views.generic import TemplateView
 from django.db.models import Q, Count, Case, When
 from django.db import connection
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpRequest
+from django.core.paginator import Paginator
 
 class PostList(ListView):
     model = Post
-    paginate_by = 4
+    paginate_by = 7
 
-    def get_queryset(self):
-        qs = super().get_queryset()
-        termo = self.request.GET.get('termo')
-        if not termo:
-            return qs
-
-        qs = qs.filter(
-            Q(title__icontains=termo) |
-            Q(content__icontains=termo)
-        )
-
-        qs = qs.order_by('-data_post')
-        return qs
+    # def get_queryset(self):
+    #     qs = super().get_queryset()
+    #
+    #     qs = qs.order_by('-data_post')
+    #     return qs
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -34,7 +29,6 @@ class PostList(ListView):
 
 class PostDetail(DetailView):
     model = Post
-
 
 class PostBusca(PostList):
     num= 0
