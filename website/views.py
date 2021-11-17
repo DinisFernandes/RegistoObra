@@ -10,6 +10,7 @@ from django.http import HttpResponse, HttpRequest
 from django.core.paginator import Paginator
 
 
+
 class PostList(ListView):
     model = Post
     paginate_by = 7
