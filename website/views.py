@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 from django.core.paginator import Paginator
 
+
 class PostList(ListView):
     model = Post
     paginate_by = 7
@@ -31,7 +32,7 @@ class PostDetail(DetailView):
     model = Post
 
 class PostBusca(PostList):
-    num= 0
+    num = 0
     template_name = 'website/post_busca.html'
 
     # def get_queryset(self, **kwargs):
