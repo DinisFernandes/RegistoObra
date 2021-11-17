@@ -13,6 +13,7 @@ from django.core.paginator import Paginator
 class PostList(ListView):
     model = Post
     paginate_by = 7
+    context_object_name = 'posts'
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -35,33 +36,17 @@ class PostBusca(PostList):
     num = 0
     template_name = 'website/post_busca.html'
 
-    # def get_queryset(self, **kwargs):
-    #     qs = super().get_queryset()
-    #     termo = self.request.GET.get('termo')
-    #     if not termo:
-    #         return qs
-    #
-    #     qs = qs.filter(
-    #         Q(title__icontains=termo) |
-    #         Q(content__icontains=termo)
-    #     )
-    #     return qs
-
-    def get_context_data(self, **kwargs):
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset()
         termo = self.request.GET.get('termo')
-        context = super().get_context_data(**kwargs)
         if not termo:
-            context.update({
-                'busca': Post.objects.all()
-            })
-            return context
+            return qs
 
-        context.update({
-            'busca': Post.objects.filter(
-                Q(title__icontains=termo) |
-                Q(content__icontains=termo))
-        })
-        return context
+        qs = qs.filter(
+            Q(title__icontains=termo) |
+            Q(content__icontains=termo)
+        )
+        return qs
 
 
 class MapaBarroselas(TemplateView):
